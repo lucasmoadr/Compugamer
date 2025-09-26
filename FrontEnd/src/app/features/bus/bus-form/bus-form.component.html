@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ isEdit ? 'Editar' : 'Nuevo' }} Autobús</h4>
+  <button type="button" class="btn-close" (click)="onCancel()"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="busForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="plate" class="form-label">Patente (plate)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="plate"
+        formControlName="plate"
+        [class.is-invalid]="busForm.get('plate')?.invalid && busForm.get('plate')?.touched"
+        placeholder="Ej: ABC123"
+      >
+      <div class="invalid-feedback" *ngIf="busForm.get('plate')?.errors?.['required']">
+        La patente es requerida
+      </div>
+      <div class="invalid-feedback" *ngIf="busForm.get('plate')?.errors?.['minlength']">
+        La patente debe tener al menos 3 caracteres
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">
+    {{ isEdit ? 'Actualizar' : 'Guardar' }}
+  </button>
+</div>

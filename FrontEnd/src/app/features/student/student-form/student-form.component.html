@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ isEdit ? 'Editar' : 'Nuevo' }} Estudiante</h4>
+  <button type="button" class="btn-close" (click)="onCancel()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre</label>
+      <input id="name" type="text" class="form-control" formControlName="name"
+             [class.is-invalid]="form.get('name')?.invalid && form.get('name')?.touched">
+      <div class="invalid-feedback">El nombre es requerido (mínimo 3 caracteres)</div>
+    </div>
+    <div class="mb-3">
+      <label for="age" class="form-label">Edad</label>
+      <input id="age" type="number" class="form-control" formControlName="age" min="3" max="21"
+             [class.is-invalid]="form.get('age')?.invalid && form.get('age')?.touched">
+      <div class="invalid-feedback">La edad debe estar entre 3 y 21</div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+  <button type="button" class="btn btn-primary" (click)="onSubmit()">{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
+</div>
