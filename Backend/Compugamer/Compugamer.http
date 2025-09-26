@@ -1,0 +1,6 @@
+@Compugamer_HostAddress = http://localhost:5153
+
+GET {{Compugamer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
