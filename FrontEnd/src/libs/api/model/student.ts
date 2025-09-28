@@ -11,7 +11,9 @@
 
 export interface Student { 
     id?: number;
+    dni?: number;
     name?: string | null;
     age?: number;
+    busId?: number | null;
 }
 

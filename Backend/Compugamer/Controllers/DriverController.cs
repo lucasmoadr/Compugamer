@@ -29,34 +29,39 @@ namespace Compugamer.Controllers
         [HttpPost]
         public ActionResult<Driver> Add(Driver driver)
         {
+            // Verifica que el Dni no exista
+            var existing = _driverService.GetByDni(driver.Dni);
+            if (existing != null)
+                return Conflict("El Dni ya existe.");
+
             var created = _driverService.Add(driver);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetByDni), new { dni = created.Id }, created);
         }
 
-        // Get driver by id
-        [HttpGet("{id}")]
-        public ActionResult<Driver> GetById(int id)
+        // Get driver by Dni
+        [HttpGet("{dni}")]
+        public ActionResult<Driver> GetByDni(int dni)
         {
-            var driver = _driverService.GetById(id);
+            var driver = _driverService.GetByDni(dni);
             if (driver == null)
                 return NotFound();
             return Ok(driver);
         }
 
         // Edit driver
-        [HttpPut("{id}")]
-        public ActionResult Edit(int id, Driver updatedDriver)
+        [HttpPut("{dni}")]
+        public ActionResult Edit(int dni, Driver updatedDriver)
         {
-            if (!_driverService.Update(id, updatedDriver))
+            if (!_driverService.Update(dni, updatedDriver))
                 return NotFound();
             return NoContent();
         }
 
         // Delete driver
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        [HttpDelete("{dni}")]
+        public ActionResult Delete(int dni)
         {
-            if (!_driverService.Delete(id))
+            if (!_driverService.Delete(dni))
                 return NotFound();
             return NoContent();
         }

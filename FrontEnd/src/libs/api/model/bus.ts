@@ -12,5 +12,7 @@
 export interface Bus { 
     id?: number;
     plate?: string | null;
+    driverDni?: number | null;
+    studentDnis?: Array<number> | null;
 }
 

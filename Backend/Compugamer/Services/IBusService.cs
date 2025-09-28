@@ -10,5 +10,6 @@ namespace Compugamer.Services
         Bus Add(Bus bus);
         bool Update(int id, Bus bus);
         bool Delete(int id);
+        bool AssignDriverToBus(int busId, int driverDni);
     }
 }

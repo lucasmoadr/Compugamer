@@ -11,8 +11,10 @@
 
 export interface Driver { 
     id?: number;
+    dni?: number;
     name?: string | null;
     age?: number;
     licenseNumber?: number;
+    busId?: number | null;
 }
 

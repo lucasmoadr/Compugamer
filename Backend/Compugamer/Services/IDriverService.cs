@@ -9,6 +9,7 @@ namespace Compugamer.Services
         Driver? GetById(int id);
         Driver Add(Driver driver);
         bool Update(int id, Driver driver);
-        bool Delete(int id);
+        bool Delete(int dni);
+        Driver? GetByDni(int dni);
     }
 }

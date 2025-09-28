@@ -8,6 +8,8 @@ namespace Compugamer.Services
         Student? GetById(int id);
         Student Add(Student student);
         bool Update(int id, Student student);
-        bool Delete(int id);
+        bool Delete(int dni);
+        Student? GetByDni(int dni);
+        bool AssignStudentToBus(int busId, int studentDni);
     }
 }
