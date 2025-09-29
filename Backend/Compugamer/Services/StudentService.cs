@@ -7,9 +7,9 @@ namespace Compugamer.Services
 {
     public class StudentService : IStudentService
     {
-        private readonly BusService _busService;
+        private readonly IBusService _busService;
 
-        public StudentService(BusService busService)
+        public StudentService(IBusService  busService)
         {
             _busService = busService;
         }

@@ -7,9 +7,9 @@ namespace Compugamer.Services
 {
     public class BusService : IBusService
     {
-        private readonly DriverService _driverService;
+        private readonly    IDriverService _driverService;
 
-        public BusService(DriverService driverService)
+        public BusService(IDriverService driverService)
         {
             _driverService = driverService;
         }
