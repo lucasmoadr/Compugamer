@@ -178,7 +178,6 @@ docker run -d -p 8080:80 --name compugamer compugamer
 
 # Solución de problemas (Troubleshooting)
 
-- **Errores de parseo JSON al asignar**: asegurá que el backend responda JSON (o `204 No Content`). Si responde texto plano, Angular puede intentar parsear como JSON y fallar.
 - **CORS / HTTPS locales**: si usás `https://localhost:44305`, puede requerir confiar el certificado en el navegador. Configurá CORS en la API para permitir el origen `http://localhost:4200` durante desarrollo.
 
 
