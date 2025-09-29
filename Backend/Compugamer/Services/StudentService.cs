@@ -7,6 +7,12 @@ namespace Compugamer.Services
 {
     public class StudentService : IStudentService
     {
+        private readonly BusService _busService;
+
+        public StudentService(BusService busService)
+        {
+            _busService = busService;
+        }
         public IEnumerable<Student> GetAll() => InMemoryDatabase.Students;
 
         public Student? GetById(int id) => InMemoryDatabase.Students.FirstOrDefault(s => s.Id == id);
@@ -48,7 +54,8 @@ namespace Compugamer.Services
         
         public bool AssignStudentToBus(int busId, int studentDni)
         {
-            var bus = InMemoryDatabase.Buses.FirstOrDefault(b => b.Id == busId);
+            
+            var bus = _busService.GetById(busId);
             var student = GetByDni(studentDni);
 
             if (bus == null || student == null)
