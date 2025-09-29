@@ -7,7 +7,12 @@ namespace Compugamer.Services
 {
     public class BusService : IBusService
     {
-        
+        private readonly DriverService _driverService;
+
+        public BusService(DriverService driverService)
+        {
+            _driverService = driverService;
+        }
         public IEnumerable<Bus> GetAll() => InMemoryDatabase.Buses;
 
         public Bus? GetById(int id) => InMemoryDatabase.Buses.FirstOrDefault(b => b.Id == id);
@@ -40,12 +45,12 @@ namespace Compugamer.Services
         public bool AssignDriverToBus(int busId, int driverDni)
         {
             var bus = GetById(busId);
-            var driver = InMemoryDatabase.Drivers.FirstOrDefault(d => d.Dni == driverDni);
+            var driver = _driverService.GetByDni(driverDni);//InMemoryDatabase.Drivers.FirstOrDefault(d => d.Dni == driverDni);
 
             if (bus == null || driver == null)
                 return false;
 
-            // Verifica que el chofer no esté asignado a otro bus
+            // Verifica que el chofer no estÃ© asignado a otro bus
             if (InMemoryDatabase.Drivers.Any(d => d.BusId != 0 && d.BusId != null && d.BusId != busId && d.Dni == driverDni))
                 return false;
 
