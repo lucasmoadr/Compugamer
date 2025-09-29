@@ -6,11 +6,18 @@
     </button>
   </div>
 
+ <!-- <div class="row mb-3">
+    <div class="col-md-6">
+      <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Buscar por DNI o nombre" />
+    </div>
+  </div>
+-->
   <div class="table-responsive">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
           <th>ID</th>
+          <th>DNI</th>
           <th>Nombre</th>
           <th>Edad</th>
           <th>Número de licencia</th>
@@ -18,8 +25,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let d of drivers">
+        <tr *ngFor="let d of filteredDrivers">
           <td>{{ d.id }}</td>
+          <td>{{ d.dni }}</td>
           <td>{{ d.name }}</td>
           <td>{{ d.age }}</td>
           <td>{{ d.licenseNumber }}</td>
@@ -34,8 +42,8 @@
             </div>
           </td>
         </tr>
-        <tr *ngIf="drivers.length === 0">
-          <td colspan="5" class="text-center">No hay conductores registrados</td>
+        <tr *ngIf="filteredDrivers.length === 0">
+          <td colspan="6" class="text-center">No hay conductores registrados</td>
         </tr>
       </tbody>
     </table>

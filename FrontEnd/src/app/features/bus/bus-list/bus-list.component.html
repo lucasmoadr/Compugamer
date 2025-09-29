@@ -1,4 +1,13 @@
 <div class="container mt-4">
+  <!-- Alerts -->
+  <div *ngIf="successMessage" class="alert alert-success d-flex justify-content-between align-items-center" role="alert">
+    <div>{{ successMessage }}</div>
+    <button type="button" class="btn-close" aria-label="Close" (click)="successMessage = null"></button>
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+    <div>{{ errorMessage }}</div>
+    <button type="button" class="btn-close" aria-label="Close" (click)="errorMessage = null"></button>
+  </div>
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Listado de Autobuses</h2>
     <button class="btn btn-primary" (click)="openBusForm()">
@@ -12,6 +21,8 @@
         <tr>
           <th>ID</th>
           <th>Patente</th>
+          <th>Chofer</th>
+          <th>Estudiantes</th>
           <th class="text-center">Acciones</th>
         </tr>
       </thead>
@@ -19,19 +30,29 @@
         <tr *ngFor="let bus of buses">
           <td>{{ bus.id }}</td>
           <td>{{ bus.plate }}</td>
+          <td>{{ driverLabelForBus(bus.id) }}</td>
+          <td [attr.title]="studentNamesForBus(bus.id).join(', ')">
+            {{ studentCountForBus(bus.id) }}
+          </td>
           <td class="text-center">
             <div class="btn-group" role="group">
               <button class="btn btn-sm btn-warning me-2" (click)="openBusForm(bus)">
                 <i class="bi bi-pencil"></i> Editar
               </button>
-              <button class="btn btn-sm btn-danger" (click)="deleteBus(bus)">
+              <button class="btn btn-sm btn-danger me-2" (click)="deleteBus(bus)">
                 <i class="bi bi-trash"></i> Eliminar
+              </button>
+              <button class="btn btn-sm btn-secondary me-2" (click)="openAssignDriver(bus)">
+                <i class="bi bi-person-badge"></i> Asignar Chofer
+              </button>
+              <button class="btn btn-sm btn-info text-white" (click)="openAssignStudents(bus)">
+                <i class="bi bi-people"></i> Asignar Estudiantes
               </button>
             </div>
           </td>
         </tr>
         <tr *ngIf="buses.length === 0">
-          <td colspan="5" class="text-center">No hay autobuses registrados</td>
+          <td colspan="6" class="text-center">No hay autobuses registrados</td>
         </tr>
       </tbody>
     </table>
@@ -51,3 +72,53 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Asignar Chofer -->
+<div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);" *ngIf="assignDriverBusId !== null">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Asignar Chofer al Bus {{ assignDriverBusId }}</h5>
+        <button type="button" class="btn-close" (click)="closeAssignDriver()"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Chofer</label>
+        <!-- <input class="form-control mb-2" type="text" [(ngModel)]="driverSearch" placeholder="Buscar por nombre o DNI" /> -->
+        <select class="form-select" [(ngModel)]="selectedDriverDni">
+          <option [ngValue]="null" disabled>Seleccione un chofer</option>
+          <option *ngFor="let d of filteredAvailableDrivers" [ngValue]="d.dni">{{ d.name }} (DNI: {{ d.dni }})</option>
+        </select>
+        <div class="form-text" *ngIf="filteredAvailableDrivers.length === 0">No hay choferes disponibles para asignar.</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAssignDriver()">Cancelar</button>
+        <button type="button" class="btn btn-primary" [disabled]="selectedDriverDni===null || filteredAvailableDrivers.length === 0" (click)="confirmAssignDriver()">Asignar</button>
+      </div>
+    </div>
+  </div>
+ </div>
+
+<!-- Modal Asignar Estudiantes -->
+<div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);" *ngIf="assignStudentsBusId !== null">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Asignar Estudiantes al Bus {{ assignStudentsBusId }}</h5>
+        <button type="button" class="btn-close" (click)="closeAssignStudents()"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Estudiantes</label>
+       <!-- <input class="form-control mb-2" type="text" [(ngModel)]="studentSearch" placeholder="Buscar por nombre o DNI" />-->
+        <select class="form-select" multiple size="8" [(ngModel)]="selectedStudentDnis">
+          <option *ngFor="let s of filteredAvailableStudents" [ngValue]="s.dni">{{ s.name }} (DNI: {{ s.dni }})</option>
+        </select>
+        <div class="form-text" *ngIf="filteredAvailableStudents.length === 0">No hay estudiantes disponibles para asignar.</div>
+        <small class="text-muted">Mantenga presionada la tecla Ctrl (Cmd en Mac) para seleccionar múltiples opciones.</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAssignStudents()">Cancelar</button>
+        <button type="button" class="btn btn-primary" [disabled]="!selectedStudentDnis.length || filteredAvailableStudents.length === 0" (click)="confirmAssignStudents()">Asignar</button>
+      </div>
+    </div>
+  </div>
+ </div>

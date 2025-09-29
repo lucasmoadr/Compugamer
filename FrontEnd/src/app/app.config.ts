@@ -10,6 +10,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    //provideApi('http://localhost:8080')
     provideApi('https://localhost:44305')
   ]
 };

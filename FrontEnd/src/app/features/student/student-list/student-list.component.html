@@ -11,16 +11,20 @@
       <thead class="table-dark">
         <tr>
           <th>ID</th>
+          <th>DNI</th>
           <th>Nombre</th>
           <th>Edad</th>
+          <th>Bus</th>
           <th class="text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let s of students">
           <td>{{ s.id }}</td>
+          <td>{{ s.dni }}</td>
           <td>{{ s.name }}</td>
           <td>{{ s.age }}</td>
+          <td>{{ busLabelForStudent(s) }}</td>
           <td class="text-center">
             <div class="btn-group" role="group">
               <button class="btn btn-sm btn-warning me-2" (click)="openForm(s)">
@@ -33,7 +37,7 @@
           </td>
         </tr>
         <tr *ngIf="students.length === 0">
-          <td colspan="4" class="text-center">No hay estudiantes registrados</td>
+          <td colspan="6" class="text-center">No hay estudiantes registrados</td>
         </tr>
       </tbody>
     </table>
@@ -53,3 +57,4 @@
     </div>
   </div>
 </div>
+

@@ -20,6 +20,7 @@ export class StudentFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
+      dni: [null, [Validators.required, Validators.min(1000000), Validators.max(99999999)]],
       age: [null, [Validators.required, Validators.min(3), Validators.max(21)]]
     });
   }
@@ -42,3 +43,4 @@ export class StudentFormComponent implements OnInit {
 
   onCancel() { this.cancelled.emit(); }
 }
+

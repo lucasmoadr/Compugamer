@@ -11,6 +11,12 @@
       <div class="invalid-feedback">El nombre es requerido (mínimo 3 caracteres)</div>
     </div>
     <div class="mb-3">
+      <label for="dni" class="form-label">DNI</label>
+      <input id="dni" type="number" class="form-control" formControlName="dni" min="1000000" max="99999999"
+             [class.is-invalid]="form.get('dni')?.invalid && form.get('dni')?.touched">
+      <div class="invalid-feedback">El DNI es obligatorio y debe tener entre 7 y 8 dígitos</div>
+    </div>
+    <div class="mb-3">
       <label for="age" class="form-label">Edad</label>
       <input id="age" type="number" class="form-control" formControlName="age" min="3" max="21"
              [class.is-invalid]="form.get('age')?.invalid && form.get('age')?.touched">
@@ -22,3 +28,4 @@
   <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
   <button type="button" class="btn btn-primary" (click)="onSubmit()">{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
 </div>
+
