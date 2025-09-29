@@ -45,7 +45,8 @@ namespace Compugamer.Services
         public bool AssignDriverToBus(int busId, int driverDni)
         {
             var bus = GetById(busId);
-            var driver = _driverService.GetByDni(driverDni);//InMemoryDatabase.Drivers.FirstOrDefault(d => d.Dni == driverDni);
+
+            var driver = _driverService.GetByDni(driverDni);
 
             if (bus == null || driver == null)
                 return false;
