@@ -30,7 +30,7 @@ namespace Compugamer.Services
 
         public bool Update(int id, Driver updatedDriver)
         {
-            var driver = InMemoryDatabase.Drivers.FirstOrDefault(d => d.Id == id);
+            var driver = GetById(id);
             if (driver == null) return false;
             driver.Name = updatedDriver.Name;
             driver.LicenseNumber = updatedDriver.LicenseNumber;
@@ -39,7 +39,7 @@ namespace Compugamer.Services
 
         public bool Delete(int dni)
         {
-            var driver = InMemoryDatabase.Drivers.FirstOrDefault(d => d.Dni == dni);
+            var driver = GetByDni(dni);
             if (driver == null) return false;
             InMemoryDatabase.Drivers.Remove(driver);
             return true;

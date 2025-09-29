@@ -11,6 +11,8 @@ namespace Compugamer.Services
 
         public Student? GetById(int id) => InMemoryDatabase.Students.FirstOrDefault(s => s.Id == id);
 
+        public Student? GetByDni(int dni) => InMemoryDatabase.Students.FirstOrDefault(s => s.Dni == dni);
+
         public Student Add(Student student)
         {
             // Validar que no exista un estudiante con el mismo DNI
@@ -28,7 +30,7 @@ namespace Compugamer.Services
 
         public bool Update(int id, Student updatedStudent)
         {
-            var student = InMemoryDatabase.Students.FirstOrDefault(s => s.Id == id);
+            var student = GetById(id);
             if (student == null) return false;
             student.Name = updatedStudent.Name;
             student.Age = updatedStudent.Age;
@@ -37,18 +39,17 @@ namespace Compugamer.Services
 
         public bool Delete(int dni)
         {
-            var student = InMemoryDatabase.Students.FirstOrDefault(s => s.Dni == dni);
+            var student = GetByDni(dni);
             if (student == null) return false;
             InMemoryDatabase.Students.Remove(student);
             return true;
         }
 
-        public Student? GetByDni(int dni) => InMemoryDatabase.Students.FirstOrDefault(s => s.Dni == dni);
-
+        
         public bool AssignStudentToBus(int busId, int studentDni)
         {
             var bus = InMemoryDatabase.Buses.FirstOrDefault(b => b.Id == busId);
-            var student = InMemoryDatabase.Students.FirstOrDefault(s => s.Dni == studentDni);
+            var student = GetByDni(studentDni);
 
             if (bus == null || student == null)
                 return false;

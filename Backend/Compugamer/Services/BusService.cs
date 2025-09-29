@@ -21,7 +21,7 @@ namespace Compugamer.Services
 
         public bool Update(int id, Bus updatedBus)
         {
-            var bus = InMemoryDatabase.Buses.FirstOrDefault(b => b.Id == id);
+            var bus = GetById(id);
             if (bus == null) return false;
             bus.Plate = updatedBus.Plate;
             bus.DriverDni = updatedBus.DriverDni;
@@ -31,7 +31,7 @@ namespace Compugamer.Services
 
         public bool Delete(int id)
         {
-            var bus = InMemoryDatabase.Buses.FirstOrDefault(b => b.Id == id);
+            var bus = GetById(id);
             if (bus == null) return false;
             InMemoryDatabase.Buses.Remove(bus);
             return true;
@@ -39,7 +39,7 @@ namespace Compugamer.Services
 
         public bool AssignDriverToBus(int busId, int driverDni)
         {
-            var bus = InMemoryDatabase.Buses.FirstOrDefault(b => b.Id == busId);
+            var bus = GetById(busId);
             var driver = InMemoryDatabase.Drivers.FirstOrDefault(d => d.Dni == driverDni);
 
             if (bus == null || driver == null)
